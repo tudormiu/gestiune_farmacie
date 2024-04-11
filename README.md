@@ -8,7 +8,7 @@ Această aplicație este un serviciu de farmacie care oferă următoarele funcț
    5. Adăugare angajat (add employee - ae)
 
 2. **Ștergere (Delete):**
-   6. Ștergere medicament (delete medicine - dm)
+   6. Ștergere medicament (delete medicine - dm)\n
    7. Ștergere client (delete client - dc)
    8. Ștergere furnizor (delete supplier - ds)
    9. Ștergere angajat (delete employee - de)

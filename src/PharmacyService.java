@@ -16,11 +16,12 @@ public class PharmacyService {
         this.clienti = clienti;
         this.vanzari = vanzari;
     }
+
     public void start() {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.print("Select mode (add - a, delete - d, edit - e, display details - dd, close - q): ");
+            System.out.print("Select mode (add - a, delete - d, edit - e, display details - dd, restock - r, close - q): ");
             String mode = scanner.nextLine();
 
             if (mode.equals("q")) {
@@ -37,6 +38,8 @@ public class PharmacyService {
                 case "e":
                     edit(scanner);
                     break;
+                case "r":
+                    restock(scanner);
                 case "dd":
                     display(scanner);
                     break;
@@ -174,19 +177,19 @@ public class PharmacyService {
 
         //search for the supplier
         Furnizor furnizor = null;
-        for (Furnizor f : furnizori){
-            if (f.getNume().equals(supplierName)){
+        for (Furnizor f : furnizori) {
+            if (f.getNume().equals(supplierName)) {
                 furnizor = f;
                 break;
             }
         }
 
-        if (furnizor == null){
+        if (furnizor == null) {
             System.out.println("The supplier does not exist");
             return;
         }
 
-        switch (type){
+        switch (type) {
             case "fiole":
                 System.out.print("Enter the volume of the medicine: ");
                 float volume = scanner.nextFloat();
@@ -208,7 +211,6 @@ public class PharmacyService {
                 break;
             default:
                 System.out.println("Invalid type");
-
         }
     }
 
@@ -235,27 +237,19 @@ public class PharmacyService {
     }
 
     private void addSale(Scanner scanner) {
-        System.out.print("Enter the name of the medicine: ");
-        String medicineName = scanner.nextLine();
         System.out.print("Enter the name of the client: ");
         String clientName = scanner.nextLine();
-        System.out.print("Enter the quantity of the medicine: ");
-        int quantity = scanner.nextInt();
-        System.out.print("Enter the date of the sale: ");
-        String date = scanner.nextLine();
 
-        String text;
-        System.out.print("Add medicine. To stop, type 'stop'.\n");
 
         List<Tuple> lista = new ArrayList<>();
 
-        while (true){
-            text = scanner.nextLine();
-            if (text.equals("stop")){
+        while (true) {
+            System.out.print("Add medicine by writing the name. To stop, type 'stop'.\n");
+            String name = scanner.nextLine();
+
+            if (name.equals("stop")) {
                 break;
             }
-            System.out.print("Enter the name of the medicine: ");
-            String name = scanner.nextLine();
 
             Medicament medicine = null;
             for (Medicament m : medicamente) {
@@ -266,16 +260,14 @@ public class PharmacyService {
             }
             if (medicine == null) {
                 System.out.println("The medicine does not exist");
-                break;
+            } else {
+                System.out.print("Enter the quantity of the medicine: ");
+                int quantity1 = scanner.nextInt();
+                System.out.print("Enter the discount of the medicine (X %): ");
+                double discount1 = scanner.nextDouble();
+
+                lista.add(new Tuple(medicine, quantity1, discount1));
             }
-
-            System.out.print("Enter the quantity of the medicine: ");
-            int quantity1 = scanner.nextInt();
-            System.out.print("Enter the discount of the medicine: ");
-            double discount1 = scanner.nextDouble();
-
-            lista.add(new Tuple(medicine, quantity1, discount1));
-
         }
 
         Client client = null;
@@ -308,11 +300,12 @@ public class PharmacyService {
         System.out.print("Enter the discount of the sale: ");
         double disc = scanner.nextDouble();
 
-        Vanzare vanzare = new Vanzare(client, ang , lista, disc);
+        Vanzare vanzare = new Vanzare(client, ang, lista, disc);
+        vanzari.add(vanzare);
     }
 
     private void addEmployee(Scanner scanner) {
-        System.out.print("Enter the surname of the client: ");
+        System.out.print("Enter the surname of the employee: ");
         String surname = scanner.nextLine();
         System.out.print("Enter the name of the employee: ");
         String name = scanner.nextLine();
@@ -525,33 +518,23 @@ public class PharmacyService {
         angajati.remove(angajat);
     }
 
-    private void displayMedicineDetails() {
+    private void restock(Scanner scanner) {
+        System.out.print("Enter the name of the medicine: ");
+        String name = scanner.nextLine();
+        Medicament medicament = null;
         for (Medicament m : medicamente) {
-            System.out.println(m);
+            if (m.getDenumire().equals(name)) {
+                medicament = m;
+                break;
+            }
         }
-    }
+        if (medicament == null) {
+            System.out.println("The medicine does not exist");
+            return;
+        }
 
-    private void displayClientDetails() {
-        for (Client c : clienti) {
-            System.out.println(c);
-        }
-    }
-
-    private void displaySupplierDetails() {
-        for (Furnizor f : furnizori) {
-            System.out.println(f);
-        }
-    }
-
-    private void displaySaleDetails() {
-        for (Vanzare v : vanzari) {
-            System.out.println(v);
-        }
-    }
-
-    private void displayEmployeeDetails() {
-        for (Angajat a : angajati) {
-            System.out.println(a);
-        }
+        System.out.print("Enter the quantity of the medicine: ");
+        int quantity = scanner.nextInt();
+        medicament.adaugaStoc(quantity);
     }
 }

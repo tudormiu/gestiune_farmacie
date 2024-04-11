@@ -23,6 +23,17 @@ public class Vanzare {
 
         this.discount = discount;
 
-        this.total *= (1 - discount);
+        this.total *= ((100 - discount) / 100);
+    }
+
+    @Override
+    public String toString() {
+        return "Vanzare{" +
+                "client=" + client +
+                ", angajat=" + angajat +
+                ", listaMedicamente=" + listaMedicamente +
+                ", total=" + total +
+                ", discount=" + discount +
+                '}';
     }
 }

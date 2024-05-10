@@ -1,3 +1,5 @@
+package model;
+
 public class Tuple {
     private Medicament medicament;
     private int cantitate;
@@ -23,7 +25,7 @@ public class Tuple {
 
     @Override
     public String toString() {
-        return "Tuple{" +
+        return "model.Tuple{" +
                 "medicament=" + medicament +
                 ", cantitate=" + cantitate +
                 ", discount=" + discount +

@@ -1,4 +1,6 @@
-public class Fiole extends Medicament{
+package model;
+
+public class Fiole extends Medicament {
     private float volum;
     int numarFiole;
 
@@ -26,7 +28,7 @@ public class Fiole extends Medicament{
 
     @Override
     public String toString() {
-        return "Fiole{" +
+        return "model.Fiole{" +
                 "volum=" + volum +
                 ", numarFiole=" + numarFiole +
                 "} " + super.toString();
@@ -34,6 +36,6 @@ public class Fiole extends Medicament{
 
     @Override
     public String getTip() {
-        return "Fiole";
+        return "model.Fiole";
     }
 }

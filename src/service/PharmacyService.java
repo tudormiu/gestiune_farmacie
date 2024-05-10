@@ -1,15 +1,20 @@
+package service;
+
+import model.*;
+import repository.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class PharmacyService {
-    ArrayList<Medicament> medicamente = new ArrayList<>();
-    ArrayList<Angajat> angajati = new ArrayList<>();
-    ArrayList<Furnizor> furnizori = new ArrayList<>();
-    ArrayList<Client> clienti = new ArrayList<>();
-    ArrayList<Vanzare> vanzari = new ArrayList<>();
+    MedicamentRepository medicamente;
+    AngajatRepository angajati;
+    FurnizorRepository furnizori;
+    ClientRepository clienti;
+    VanzareRepository vanzari;
 
-    public PharmacyService(ArrayList<Medicament> medicamente, ArrayList<Angajat> angajati, ArrayList<Furnizor> furnizori, ArrayList<Client> clienti, ArrayList<Vanzare> vanzari) {
+    public PharmacyService(MedicamentRepository medicamente, AngajatRepository angajati, FurnizorRepository furnizori, ClientRepository clienti, VanzareRepository vanzari) {
         this.medicamente = medicamente;
         this.angajati = angajati;
         this.furnizori = furnizori;
@@ -50,12 +55,15 @@ public class PharmacyService {
     }
 
     private void add(Scanner scanner) {
-        System.out.print("What would you like to add:\n " +
-                "add medicine - am\n" +
-                "add client - ac\n" +
-                "add supplier - as\n" +
-                "add sale - av\n" +
-                "add employee - ae\n");
+        System.out.print("""
+                What would you like to add:
+                 \
+                add medicine - am
+                add client - ac
+                add supplier - as
+                add sale - av
+                add employee - ae
+                """);
         String addMode = scanner.nextLine();
 
         switch (addMode) {
@@ -78,11 +86,14 @@ public class PharmacyService {
     }
 
     private void delete(Scanner scanner) {
-        System.out.print("What would you like to delete:\n " +
-                "delete medicine - dm\n" +
-                "delete client - dc\n" +
-                "delete supplier - ds\n" +
-                "delete employee - de\n");
+        System.out.print("""
+                What would you like to delete:
+                 \
+                delete medicine - dm
+                delete client - dc
+                delete supplier - ds
+                delete employee - de
+                """);
         String deleteMode = scanner.nextLine();
 
         switch (deleteMode) {
@@ -102,11 +113,14 @@ public class PharmacyService {
     }
 
     private void edit(Scanner scanner) {
-        System.out.print("What would you like to edit:\n " +
-                "edit medicine - em\n" +
-                "edit client - ec\n" +
-                "edit supplier - es\n" +
-                "edit employee - ee\n");
+        System.out.print("""
+                What would you like to edit:
+                 \
+                edit medicine - em
+                edit client - ec
+                edit supplier - es
+                edit employee - ee
+                """);
         String editMode = scanner.nextLine();
 
         switch (editMode) {
@@ -126,37 +140,40 @@ public class PharmacyService {
     }
 
     private void display(Scanner scanner) {
-        System.out.print("What would you like to display:\n " +
-                "display medicine details - dmd\n" +
-                "display client details - dcd\n" +
-                "display supplier details - dsd\n" +
-                "display sale details - dvd\n" +
-                "display employee details - ded\n");
+        System.out.print("""
+                What would you like to display:
+                 \
+                display medicine details - dmd
+                display client details - dcd
+                display supplier details - dsd
+                display sale details - dvd
+                display employee details - ded
+                """);
         String displayMode = scanner.nextLine();
 
         switch (displayMode) {
             case "dmd":
-                for (Medicament m : medicamente) {
+                for (Medicament m : medicamente.findAll()) {
                     System.out.println(m);
                 }
                 break;
             case "dcd":
-                for (Client c : clienti) {
+                for (Client c : clienti.findAll()) {
                     System.out.println(c);
                 }
                 break;
             case "dsd":
-                for (Furnizor f : furnizori) {
+                for (Furnizor f : furnizori.findAll()) {
                     System.out.println(f);
                 }
                 break;
             case "dvd":
-                for (Vanzare v : vanzari) {
+                for (Vanzare v : vanzari.findAll()) {
                     System.out.println(v);
                 }
                 break;
             case "ded":
-                for (Angajat a : angajati) {
+                for (Angajat a : angajati.findAll()) {
                     System.out.println(a);
                 }
                 break;
@@ -175,14 +192,7 @@ public class PharmacyService {
         System.out.print("Enter the stock of the medicine: ");
         int stock = scanner.nextInt();
 
-        //search for the supplier
-        Furnizor furnizor = null;
-        for (Furnizor f : furnizori) {
-            if (f.getNume().equals(supplierName)) {
-                furnizor = f;
-                break;
-            }
-        }
+        Furnizor furnizor = furnizori.find(supplierName);
 
         if (furnizor == null) {
             System.out.println("The supplier does not exist");
@@ -195,19 +205,19 @@ public class PharmacyService {
                 float volume = scanner.nextFloat();
                 System.out.print("Enter the number of fiole: ");
                 int number = scanner.nextInt();
-                medicamente.add(new Fiole(name, furnizor, price, stock, volume, number));
+                medicamente.save(new Fiole(name, furnizor, price, stock, volume, number));
                 break;
             case "comprimate":
                 System.out.print("Enter the number of comprimate: ");
                 int comprimate = scanner.nextInt();
                 System.out.print("Enter the number of miligrame: ");
                 int miligrame = scanner.nextInt();
-                medicamente.add(new Comprimate(name, furnizor, price, stock, comprimate, miligrame));
+                medicamente.save(new Comprimate(name, furnizor, price, stock, comprimate, miligrame));
                 break;
             case "sirop":
                 System.out.print("Enter the number of mililitri: ");
                 int mililitri = scanner.nextInt();
-                medicamente.add(new Sirop(name, furnizor, price, stock, mililitri));
+                medicamente.save(new Sirop(name, furnizor, price, stock, mililitri));
                 break;
             default:
                 System.out.println("Invalid type");
@@ -223,7 +233,7 @@ public class PharmacyService {
         String address = scanner.nextLine();
         System.out.print("Enter the phone number of the client: ");
         String phoneNumber = scanner.nextLine();
-        clienti.add(new Client(surname, name, address, phoneNumber));
+        clienti.save(new Client(surname, name, address, phoneNumber));
     }
 
     private void addSupplier(Scanner scanner) {
@@ -233,7 +243,7 @@ public class PharmacyService {
         String address = scanner.nextLine();
         System.out.print("Enter the phone number of the supplier: ");
         String phoneNumber = scanner.nextLine();
-        furnizori.add(new Furnizor(name, address, phoneNumber));
+        furnizori.save(new Furnizor(name, address, phoneNumber));
     }
 
     private void addSale(Scanner scanner) {
@@ -252,12 +262,13 @@ public class PharmacyService {
             }
 
             Medicament medicine = null;
-            for (Medicament m : medicamente) {
+            for (Medicament m : medicamente.findAll()) {
                 if (m.getDenumire().equals(name)) {
                     medicine = m;
                     break;
                 }
             }
+
             if (medicine == null) {
                 System.out.println("The medicine does not exist");
             } else {
@@ -271,7 +282,7 @@ public class PharmacyService {
         }
 
         Client client = null;
-        for (Client c : clienti) {
+        for (Client c : clienti.findAll()) {
             if (c.getNume().equals(clientName)) {
                 client = c;
                 break;
@@ -286,7 +297,7 @@ public class PharmacyService {
         System.out.print("Enter the name of the employee: ");
         String employeeName = scanner.nextLine();
 
-        for (Angajat a : angajati) {
+        for (Angajat a : angajati.findAll()) {
             if (a.getNume().equals(employeeName)) {
                 ang = a;
                 break;
@@ -301,7 +312,7 @@ public class PharmacyService {
         double disc = scanner.nextDouble();
 
         Vanzare vanzare = new Vanzare(client, ang, lista, disc);
-        vanzari.add(vanzare);
+        vanzari.save(vanzare);
     }
 
     private void addEmployee(Scanner scanner) {
@@ -313,14 +324,14 @@ public class PharmacyService {
         String address = scanner.nextLine();
         System.out.print("Enter the email of the employee: ");
         String email = scanner.nextLine();
-        angajati.add(new Angajat(surname, name, address, email));
+        angajati.save(new Angajat(surname, name, address, email));
     }
 
     private void editMedicine(Scanner scanner) {
         System.out.print("Enter the name of the medicine: ");
         String name = scanner.nextLine();
         Medicament medicament = null;
-        for (Medicament m : medicamente) {
+        for (Medicament m : medicamente.findAll()) {
             if (m.getDenumire().equals(name)) {
                 medicament = m;
                 break;
@@ -339,7 +350,7 @@ public class PharmacyService {
         System.out.print("Enter the new name of the supplier: ");
         String supplierName = scanner.nextLine();
         Furnizor furnizor = null;
-        for (Furnizor f : furnizori) {
+        for (Furnizor f : furnizori.findAll()) {
             if (f.getNume().equals(supplierName)) {
                 furnizor = f;
                 break;
@@ -357,21 +368,25 @@ public class PharmacyService {
         System.out.print("Enter the new stock of the medicine: ");
         medicament.setStoc(scanner.nextInt());
 
-        if (tip.equals("Fiole")) {
-            System.out.print("Enter the new volume of the medicine: ");
-            ((Fiole) medicament).setVolum(scanner.nextFloat());
+        switch (tip) {
+            case "model.Fiole" -> {
+                System.out.print("Enter the new volume of the medicine: ");
+                ((Fiole) medicament).setVolum(scanner.nextFloat());
 
-            System.out.print("Enter the new number of fiole: ");
-            ((Fiole) medicament).setNumarFiole(scanner.nextInt());
-        } else if (tip.equals("Comprimate")) {
-            System.out.print("Enter the new number of comprimate: ");
-            ((Comprimate) medicament).setNumarComprimate(scanner.nextInt());
+                System.out.print("Enter the new number of fiole: ");
+                ((Fiole) medicament).setNumarFiole(scanner.nextInt());
+            }
+            case "model.Comprimate" -> {
+                System.out.print("Enter the new number of comprimate: ");
+                ((Comprimate) medicament).setNumarComprimate(scanner.nextInt());
 
-            System.out.print("Enter the new number of miligrame: ");
-            ((Comprimate) medicament).setMiligrame(scanner.nextInt());
-        } else if (tip.equals("Sirop")) {
-            System.out.print("Enter the new number of mililitri: ");
-            ((Sirop) medicament).setMililitri(scanner.nextInt());
+                System.out.print("Enter the new number of miligrame: ");
+                ((Comprimate) medicament).setMiligrame(scanner.nextInt());
+            }
+            case "model.Sirop" -> {
+                System.out.print("Enter the new number of mililitri: ");
+                ((Sirop) medicament).setMililitri(scanner.nextInt());
+            }
         }
     }
 
@@ -379,7 +394,7 @@ public class PharmacyService {
         System.out.print("Enter the name of the client: ");
         String name = scanner.nextLine();
         Client client = null;
-        for (Client c : clienti) {
+        for (Client c : clienti.findAll()) {
             if (c.getNume().equals(name)) {
                 client = c;
                 break;
@@ -404,7 +419,7 @@ public class PharmacyService {
         System.out.print("Enter the name of the supplier: ");
         String name = scanner.nextLine();
         Furnizor furnizor = null;
-        for (Furnizor f : furnizori) {
+        for (Furnizor f : furnizori.findAll()) {
             if (f.getNume().equals(name)) {
                 furnizor = f;
                 break;
@@ -429,7 +444,7 @@ public class PharmacyService {
         System.out.print("Enter the name of the employee: ");
         String name = scanner.nextLine();
         Angajat angajat = null;
-        for (Angajat a : angajati) {
+        for (Angajat a : angajati.findAll()) {
             if (a.getNume().equals(name)) {
                 angajat = a;
                 break;
@@ -454,7 +469,7 @@ public class PharmacyService {
         System.out.print("Enter the name of the medicine: ");
         String name = scanner.nextLine();
         Medicament medicament = null;
-        for (Medicament m : medicamente) {
+        for (Medicament m : medicamente.findAll()) {
             if (m.getDenumire().equals(name)) {
                 medicament = m;
                 break;
@@ -464,14 +479,14 @@ public class PharmacyService {
             System.out.println("The medicine does not exist");
             return;
         }
-        medicamente.remove(medicament);
+        medicamente.delete(medicament);
     }
 
     private void deleteClient(Scanner scanner) {
         System.out.print("Enter the name of the client: ");
         String name = scanner.nextLine();
         Client client = null;
-        for (Client c : clienti) {
+        for (Client c : clienti.findAll()) {
             if (c.getNume().equals(name)) {
                 client = c;
                 break;
@@ -481,14 +496,14 @@ public class PharmacyService {
             System.out.println("The client does not exist");
             return;
         }
-        clienti.remove(client);
+        clienti.delete(client);
     }
 
     private void deleteSupplier(Scanner scanner) {
         System.out.print("Enter the name of the supplier: ");
         String name = scanner.nextLine();
         Furnizor furnizor = null;
-        for (Furnizor f : furnizori) {
+        for (Furnizor f : furnizori.findAll()) {
             if (f.getNume().equals(name)) {
                 furnizor = f;
                 break;
@@ -498,14 +513,14 @@ public class PharmacyService {
             System.out.println("The supplier does not exist");
             return;
         }
-        furnizori.remove(furnizor);
+        furnizori.delete(furnizor);
     }
 
     private void deleteEmployee(Scanner scanner) {
         System.out.print("Enter the name of the employee: ");
         String name = scanner.nextLine();
         Angajat angajat = null;
-        for (Angajat a : angajati) {
+        for (Angajat a : angajati.findAll()) {
             if (a.getNume().equals(name)) {
                 angajat = a;
                 break;
@@ -515,14 +530,14 @@ public class PharmacyService {
             System.out.println("The employee does not exist");
             return;
         }
-        angajati.remove(angajat);
+        angajati.delete(angajat);
     }
 
     private void restock(Scanner scanner) {
         System.out.print("Enter the name of the medicine: ");
         String name = scanner.nextLine();
         Medicament medicament = null;
-        for (Medicament m : medicamente) {
+        for (Medicament m : medicamente.findAll()) {
             if (m.getDenumire().equals(name)) {
                 medicament = m;
                 break;

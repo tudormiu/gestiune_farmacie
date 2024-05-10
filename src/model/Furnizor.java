@@ -1,3 +1,5 @@
+package model;
+
 public class Furnizor {
     private String nume;
     private String adresa;
@@ -35,7 +37,7 @@ public class Furnizor {
 
     @Override
     public String toString() {
-        return "Furnizor{" +
+        return "model.Furnizor{" +
                 "nume='" + nume + '\'' +
                 ", adresa='" + adresa + '\'' +
                 ", telefon='" + telefon + '\'' +

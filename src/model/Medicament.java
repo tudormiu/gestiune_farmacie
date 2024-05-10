@@ -1,6 +1,6 @@
-//medicament class with derived classes: comprimate, sirop, fiole
+package model;//medicament class with derived classes: comprimate, sirop, fiole
 
-abstract class Medicament {
+public abstract class Medicament {
     private String denumire;
     private Furnizor furnizor;
     private double pret;
@@ -54,7 +54,7 @@ abstract class Medicament {
     }
 
     public String toString() {
-        return "Medicament{" +
+        return "model.Medicament{" +
                 "denumire='" + denumire + '\'' +
                 ", furnizor=" + furnizor +
                 ", pret=" + pret +

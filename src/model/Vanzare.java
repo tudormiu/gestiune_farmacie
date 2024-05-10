@@ -1,15 +1,16 @@
-// lista de medicamente salvata ca tupluri - medicament, cantitate, discount
+package model;
+
 public class Vanzare {
+    private static int counter = 0;
+    private int id;
     private Client client;
     private Angajat angajat;
-
     private java.util.List<Tuple> listaMedicamente;
-
     private double total;
-
     private double discount;
 
     public Vanzare(Client client, Angajat angajat, java.util.List<Tuple> listaMedicamente, double discount) {
+        this.id = ++counter;
         this.client = client;
         this.angajat = angajat;
         this.listaMedicamente = listaMedicamente;
@@ -20,20 +21,43 @@ public class Vanzare {
         }
 
         this.total = tot;
-
         this.discount = discount;
-
         this.total *= ((100 - discount) / 100);
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
     public String toString() {
-        return "Vanzare{" +
+        return "model.Vanzare{" +
+                "id=" + id +
                 "client=" + client +
                 ", angajat=" + angajat +
                 ", listaMedicamente=" + listaMedicamente +
                 ", total=" + total +
                 ", discount=" + discount +
                 '}';
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public Angajat getAngajat() {
+        return angajat;
+    }
+
+    public java.util.List<Tuple> getListaMedicamente() {
+        return listaMedicamente;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public double getDiscount() {
+        return discount;
     }
 }

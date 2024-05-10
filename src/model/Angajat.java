@@ -1,8 +1,17 @@
+package model;
+
 public class Angajat {
     private String nume;
     private String prenume;
     private String email;
     private String adresa;
+
+    public Angajat() {
+        this.nume = "";
+        this.prenume = "";
+        this.email = "";
+        this.adresa = "";
+    }
 
     public Angajat(String nume, String prenume, String email, String adresa) {
         this.nume = nume;
@@ -46,7 +55,7 @@ public class Angajat {
 
     @Override
     public String toString() {
-        return "Angajat{" +
+        return "model.Angajat{" +
                 "nume='" + nume + '\'' +
                 ", prenume='" + prenume + '\'' +
                 ", email='" + email + '\'' +

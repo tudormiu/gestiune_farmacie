@@ -1,3 +1,5 @@
+package model;
+
 public class Comprimate extends Medicament {
     private int numarComprimate;
     private int miligrame;
@@ -26,7 +28,7 @@ public class Comprimate extends Medicament {
 
     @Override
     public String toString() {
-        return "Comprimate{" +
+        return "model.Comprimate{" +
                 "numarComprimate=" + numarComprimate +
                 ", miligrame=" + miligrame +
                 "} " + super.toString();
@@ -34,6 +36,6 @@ public class Comprimate extends Medicament {
 
     @Override
     public String getTip() {
-        return "Comprimate";
+        return "model.Comprimate";
     }
 }

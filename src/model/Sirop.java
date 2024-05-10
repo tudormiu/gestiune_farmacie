@@ -1,4 +1,6 @@
-public class Sirop extends Medicament{
+package model;
+
+public class Sirop extends Medicament {
     private int mililitri;
 
     public Sirop(String denumire, Furnizor furnizor, double pret, int stoc, int mililitri) {
@@ -16,13 +18,13 @@ public class Sirop extends Medicament{
 
     @Override
     public String toString() {
-        return "Sirop{" +
+        return "model.Sirop{" +
                 "mililitri=" + mililitri +
                 "} " + super.toString();
     }
 
     @Override
     public String getTip() {
-        return "Sirop";
+        return "model.Sirop";
     }
 }

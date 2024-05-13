@@ -1,11 +1,20 @@
 package model;
 
 public class Fiole extends Medicament {
+    private int idFiole;
     private float volum;
     int numarFiole;
 
     public Fiole(String denumire, Furnizor furnizor, double pret, int stoc, float volum, int numarFiole) {
-        super(denumire, furnizor, pret, stoc);
+        super(denumire, furnizor, pret, stoc, "Fiole");
+        this.idFiole = super.getId();
+        this.volum = volum;
+        this.numarFiole = numarFiole;
+    }
+
+    public Fiole(int id, String denumire, Furnizor furnizor, double pret, int stoc, float volum, int numarFiole) {
+        super(id, denumire, furnizor, pret, stoc, "Fiole");
+        this.idFiole = id;
         this.volum = volum;
         this.numarFiole = numarFiole;
     }

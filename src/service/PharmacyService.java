@@ -5,6 +5,7 @@ import repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class PharmacyService {
@@ -181,20 +182,21 @@ public class PharmacyService {
     }
 
     private void addMedicine(Scanner scanner) {
+        System.out.print("Enter the type of the medicine (fiole, comprimate, sirop): ");
+        String type = scanner.nextLine();
+
         System.out.print("Enter the name of the medicine: ");
         String name = scanner.nextLine();
         System.out.print("Enter the name of the supplier: ");
         String supplierName = scanner.nextLine();
-        System.out.print("Enter the type of the medicine (fiole, comprimate, sirop): ");
-        String type = scanner.nextLine();
         System.out.print("Enter the price of the medicine: ");
         double price = scanner.nextDouble();
         System.out.print("Enter the stock of the medicine: ");
         int stock = scanner.nextInt();
 
-        Furnizor furnizor = furnizori.find(supplierName);
+        Optional<Furnizor> furnizor = furnizori.find(supplierName);
 
-        if (furnizor == null) {
+        if (furnizor.isEmpty()) {
             System.out.println("The supplier does not exist");
             return;
         }
@@ -205,19 +207,19 @@ public class PharmacyService {
                 float volume = scanner.nextFloat();
                 System.out.print("Enter the number of fiole: ");
                 int number = scanner.nextInt();
-                medicamente.save(new Fiole(name, furnizor, price, stock, volume, number));
+                medicamente.save(new Fiole(name, furnizor.orElse(null), price, stock, volume, number));
                 break;
             case "comprimate":
                 System.out.print("Enter the number of comprimate: ");
                 int comprimate = scanner.nextInt();
                 System.out.print("Enter the number of miligrame: ");
                 int miligrame = scanner.nextInt();
-                medicamente.save(new Comprimate(name, furnizor, price, stock, comprimate, miligrame));
+                medicamente.save(new Comprimate(name, furnizor.orElse(null), price, stock, comprimate, miligrame));
                 break;
             case "sirop":
                 System.out.print("Enter the number of mililitri: ");
                 int mililitri = scanner.nextInt();
-                medicamente.save(new Sirop(name, furnizor, price, stock, mililitri));
+                medicamente.save(new Sirop(name, furnizor.orElse(null), price, stock, mililitri));
                 break;
             default:
                 System.out.println("Invalid type");
@@ -388,6 +390,8 @@ public class PharmacyService {
                 ((Sirop) medicament).setMililitri(scanner.nextInt());
             }
         }
+
+        medicamente.update(medicament);
     }
 
     private void editClient(Scanner scanner) {
@@ -405,14 +409,19 @@ public class PharmacyService {
             return;
         }
 
-        System.out.print("Enter the new name of the client: ");
+        System.out.print("Enter the new surname of the client: ");
         client.setNume(scanner.nextLine());
+
+        System.out.print("Enter the new name of the client: ");
+        client.setPrenume(scanner.nextLine());
+
+        System.out.print("Enter the new phone number of the client: ");
+        client.setTelefon(scanner.nextLine());
 
         System.out.print("Enter the new address of the client: ");
         client.setAdresa(scanner.nextLine());
 
-        System.out.print("Enter the new phone number of the client: ");
-        client.setTelefon(scanner.nextLine());
+        clienti.update(client);
     }
 
     private void editSupplier(Scanner scanner) {
@@ -438,15 +447,18 @@ public class PharmacyService {
 
         System.out.print("Enter the new phone number of the supplier: ");
         furnizor.setTelefon(scanner.nextLine());
+
+        furnizori.update(furnizor);
+
     }
 
     private void editEmployee(Scanner scanner) {
         System.out.print("Enter the name of the employee: ");
         String name = scanner.nextLine();
-        Angajat angajat = null;
+        Angajat angajat= null;
         for (Angajat a : angajati.findAll()) {
             if (a.getNume().equals(name)) {
-                angajat = a;
+                angajat= a;
                 break;
             }
         }
@@ -455,14 +467,19 @@ public class PharmacyService {
             return;
         }
 
-        System.out.print("Enter the new name of the employee: ");
+        System.out.print("Enter the new surname of the employee: ");
         angajat.setNume(scanner.nextLine());
+
+        System.out.print("Enter the new name of the employee: ");
+        angajat.setPrenume(scanner.nextLine());
 
         System.out.print("Enter the new address of the employee: ");
         angajat.setAdresa(scanner.nextLine());
 
         System.out.print("Enter the new email of the employee: ");
         angajat.setEmail(scanner.nextLine());
+
+        angajati.update(angajat);
     }
 
     private void deleteMedicine(Scanner scanner) {

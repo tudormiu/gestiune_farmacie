@@ -1,7 +1,10 @@
 package model;
 
+import java.util.Random;
+
 public class Vanzare {
-    private static int counter = 0;
+    private static Random rand = new Random();
+    private static int counter = rand.nextInt(2147483647) + 1;
     private int id;
     private Client client;
     private Angajat angajat;

@@ -1,16 +1,42 @@
 package model;//medicament class with derived classes: comprimate, sirop, fiole
 
-public abstract class Medicament {
+import java.util.Random;
+
+public class Medicament {
+    private static Random rand = new Random();
+    private static int id = rand.nextInt(2147483647) + 1;
+    private int idMedicament;
     private String denumire;
     private Furnizor furnizor;
     private double pret;
     private int stoc;
+    private String tip;
 
-    public Medicament(String denumire, Furnizor furnizor, double pret, int stoc) {
+    public Medicament(String denumire, Furnizor furnizor, double pret, int stoc, String tip) {
+        id = id + 1;
+        this.idMedicament = id++;
         this.denumire = denumire;
         this.furnizor = furnizor;
         this.pret = pret;
         this.stoc = stoc;
+        this.tip = tip;
+    }
+
+    public Medicament(int id, String denumire, Furnizor furnizor, double pret, int stoc, String tip) {
+        this.idMedicament = id;
+        this.denumire = denumire;
+        this.furnizor = furnizor;
+        this.pret = pret;
+        this.stoc = stoc;
+        this.tip = tip;
+    }
+
+    public int getId() {
+        return idMedicament;
+    }
+
+    public void setId(int id) {
+        this.idMedicament = id;
     }
 
     public String getDenumire() {
@@ -62,5 +88,7 @@ public abstract class Medicament {
                 '}';
     }
 
-    public abstract String getTip();
+    public String getTip(){
+        return tip;
+    };
 }

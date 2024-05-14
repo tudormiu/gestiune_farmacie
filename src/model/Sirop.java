@@ -1,7 +1,6 @@
 package model;
 
 public class Sirop extends Medicament {
-    private int idSirop;
     private int mililitri;
 
     public Sirop(String denumire, Furnizor furnizor, double pret, int stoc, int mililitri) {
@@ -11,7 +10,6 @@ public class Sirop extends Medicament {
 
     public Sirop(int id, String denumire, Furnizor furnizor, double pret, int stoc, int mililitri) {
         super(id, denumire, furnizor, pret, stoc, "Sirop");
-        this.idSirop = id;
         this.mililitri = mililitri;
     }
 

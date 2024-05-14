@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FioleRepositoryImpl implements FioleRepository {
-    private List<Fiole> fioleList = new ArrayList<>();
+    private final List<Fiole> fioleList = new ArrayList<>();
 
     @Override
     public Fiole find(String denumire) {

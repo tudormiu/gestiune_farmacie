@@ -3,7 +3,7 @@ package model;
 import java.util.Random;
 
 public class Angajat {
-    private static Random rand = new Random();
+    private static final Random rand = new Random();
     private static int id = rand.nextInt(2147483647) + 1;
     private int idAngajat;
     private String nume;

@@ -2,7 +2,6 @@ package repository;
 
 import model.Furnizor;
 
-import java.sql.*;
 import java.util.Optional;
 
 import java.util.List;

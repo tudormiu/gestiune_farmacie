@@ -69,18 +69,23 @@ public class PharmacyService {
 
         switch (addMode) {
             case "am":
+                AuditService.getInstance().writeAuditLog("add medicine");
                 addMedicine(scanner);
                 break;
             case "ac":
+                AuditService.getInstance().writeAuditLog("add client");
                 addClient(scanner);
                 break;
             case "as":
+                AuditService.getInstance().writeAuditLog("add supplier");
                 addSupplier(scanner);
                 break;
             case "av":
+                AuditService.getInstance().writeAuditLog("add sale");
                 addSale(scanner);
                 break;
             case "ae":
+                AuditService.getInstance().writeAuditLog("add employee");
                 addEmployee(scanner);
                 break;
         }
@@ -99,15 +104,19 @@ public class PharmacyService {
 
         switch (deleteMode) {
             case "dm":
+                AuditService.getInstance().writeAuditLog("delete medicine");
                 deleteMedicine(scanner);
                 break;
             case "dc":
+                AuditService.getInstance().writeAuditLog("delete client");
                 deleteClient(scanner);
                 break;
             case "ds":
+                AuditService.getInstance().writeAuditLog("delete supplier");
                 deleteSupplier(scanner);
                 break;
             case "de":
+                AuditService.getInstance().writeAuditLog("delete employee");
                 deleteEmployee(scanner);
                 break;
         }
@@ -126,15 +135,19 @@ public class PharmacyService {
 
         switch (editMode) {
             case "em":
+                AuditService.getInstance().writeAuditLog("edit medicine");
                 editMedicine(scanner);
                 break;
             case "ec":
+                AuditService.getInstance().writeAuditLog("edit client");
                 editClient(scanner);
                 break;
             case "es":
+                AuditService.getInstance().writeAuditLog("edit supplier");
                 editSupplier(scanner);
                 break;
             case "ee":
+                AuditService.getInstance().writeAuditLog("edit employee");
                 editEmployee(scanner);
                 break;
         }
@@ -154,26 +167,31 @@ public class PharmacyService {
 
         switch (displayMode) {
             case "dmd":
+                AuditService.getInstance().writeAuditLog("display medicine details");
                 for (Medicament m : medicamente.findAll()) {
                     System.out.println(m);
                 }
                 break;
             case "dcd":
+                AuditService.getInstance().writeAuditLog("display client details");
                 for (Client c : clienti.findAll()) {
                     System.out.println(c);
                 }
                 break;
             case "dsd":
+                AuditService.getInstance().writeAuditLog("display supplier details");
                 for (Furnizor f : furnizori.findAll()) {
                     System.out.println(f);
                 }
                 break;
             case "dvd":
+                AuditService.getInstance().writeAuditLog("display sale details");
                 for (Vanzare v : vanzari.findAll()) {
                     System.out.println(v);
                 }
                 break;
             case "ded":
+                AuditService.getInstance().writeAuditLog("display employee details");
                 for (Angajat a : angajati.findAll()) {
                     System.out.println(a);
                 }

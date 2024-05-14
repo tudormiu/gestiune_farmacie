@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Furnizor {
     //random id
-    private static Random rand = new Random();
+    private static final Random rand = new Random();
     private static int id = rand.nextInt(2147483647) + 1;
     private int idFurnizor;
     private String nume;

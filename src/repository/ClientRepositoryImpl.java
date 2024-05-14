@@ -4,7 +4,6 @@ import model.Client;
 import service.DatabaseService;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,8 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class ClientRepositoryImpl implements ClientRepository {
-
-    private List<Client> clienti = new ArrayList<>();
 
     @Override
     public Optional<Client> find(String nume, String prenume) {

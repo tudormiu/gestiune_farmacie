@@ -1,7 +1,6 @@
 package model;
 
 public class Comprimate extends Medicament {
-    private int idComprimate;
     private int numarComprimate;
     private int miligrame;
 
@@ -13,7 +12,6 @@ public class Comprimate extends Medicament {
 
     public Comprimate(int id, String denumire, Furnizor furnizor, double pret, int stoc, int numarComprimate, int miligrame) {
         super(id, denumire, furnizor, pret, stoc, "Comprimate");
-        this.idComprimate = id;
         this.numarComprimate = numarComprimate;
         this.miligrame = miligrame;
     }

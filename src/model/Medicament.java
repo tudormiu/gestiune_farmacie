@@ -3,14 +3,14 @@ package model;//medicament class with derived classes: comprimate, sirop, fiole
 import java.util.Random;
 
 public class Medicament {
-    private static Random rand = new Random();
+    private static final Random rand = new Random();
     private static int id = rand.nextInt(2147483647) + 1;
     private int idMedicament;
     private String denumire;
     private Furnizor furnizor;
     private double pret;
     private int stoc;
-    private String tip;
+    private final String tip;
 
     public Medicament(String denumire, Furnizor furnizor, double pret, int stoc, String tip) {
         id = id + 1;
@@ -90,5 +90,5 @@ public class Medicament {
 
     public String getTip(){
         return tip;
-    };
+    }
 }

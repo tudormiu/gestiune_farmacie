@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ComprimateRepositoryImpl implements ComprimateRepository {
-    private List<Comprimate> comprimateList = new ArrayList<>();
+    private final List<Comprimate> comprimateList = new ArrayList<>();
 
     @Override
     public Optional<Comprimate> find(String denumire) {

@@ -3,14 +3,14 @@ package model;
 import java.util.Random;
 
 public class Vanzare {
-    private static Random rand = new Random();
+    private static final Random rand = new Random();
     private static int counter = rand.nextInt(2147483647) + 1;
-    private int id;
-    private Client client;
-    private Angajat angajat;
-    private java.util.List<Tuple> listaMedicamente;
+    private final int id;
+    private final Client client;
+    private final Angajat angajat;
+    private final java.util.List<Tuple> listaMedicamente;
     private double total;
-    private double discount;
+    private final double discount;
 
     public Vanzare(Client client, Angajat angajat, java.util.List<Tuple> listaMedicamente, double discount) {
         this.id = ++counter;
@@ -20,7 +20,12 @@ public class Vanzare {
 
         double tot = 0;
         for (Tuple t : listaMedicamente) {
-            tot += t.getMedicament().getPret() * t.getCantitate() * (1 - t.getDiscount());
+            if(t.medicament().getStoc() < t.cantitate())
+                System.out.println("Stoc insuficient pentru medicamentul " + t.medicament().getDenumire());
+            else{
+                t.medicament().scadeStoc(t.cantitate());
+                tot += t.medicament().getPret() * t.cantitate() * (1 - t.discount());
+            }
         }
 
         this.total = tot;

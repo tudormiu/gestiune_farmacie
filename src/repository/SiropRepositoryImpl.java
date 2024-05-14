@@ -4,10 +4,9 @@ import model.Sirop;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class SiropRepositoryImpl implements SiropRepository {
-    private List<Sirop> siropList = new ArrayList<>();
+    private final List<Sirop> siropList = new ArrayList<>();
 
     @Override
     public Sirop find(String denumire) {

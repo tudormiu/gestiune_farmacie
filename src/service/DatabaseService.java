@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseService {
-    private static DatabaseService instance;
     private Connection connection;
 
     private DatabaseService() {
@@ -20,10 +19,7 @@ public class DatabaseService {
     }
 
     public static DatabaseService getInstance() {
-        if (instance == null) {
-            instance = new DatabaseService();
-        }
-        return instance;
+        return new DatabaseService();
     }
 
     public Connection getConnection() {

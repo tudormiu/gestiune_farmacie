@@ -1,6 +1,5 @@
 package repository;
 
-import model.Furnizor;
 import model.Medicament;
 import model.Comprimate;
 import model.Fiole;
@@ -8,7 +7,6 @@ import model.Sirop;
 import service.DatabaseService;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,39 +41,44 @@ try (Connection connection = DatabaseService.getInstance().getConnection();
                 int stoc = resultSet.getInt("stoc");
                 String tip = resultSet.getString("tip");
 
-                if(tip.equals("model.Fiole")) {
-                    sql = "SELECT * FROM Fiole WHERE id = ?";
-                    try (PreparedStatement statementFiole = connection.prepareStatement(sql)) {
-                        statementFiole.setInt(1, id);
-                        ResultSet resultSetFiole = statementFiole.executeQuery();
-                        if (resultSetFiole.next()) {
-                            float volum = resultSetFiole.getFloat("volum");
-                            int numarFiole = resultSetFiole.getInt("numar_fiole");
-                            medicamente.add(new Fiole(id, denumire, new FurnizorRepositoryImpl().findFurnizorById(furnizorId), pret, stoc, volum, numarFiole));
+                switch (tip) {
+                    case "model.Fiole" -> {
+                        sql = "SELECT * FROM Fiole WHERE id = ?";
+                        try (PreparedStatement statementFiole = connection.prepareStatement(sql)) {
+                            statementFiole.setInt(1, id);
+                            ResultSet resultSetFiole = statementFiole.executeQuery();
+                            if (resultSetFiole.next()) {
+                                float volum = resultSetFiole.getFloat("volum");
+                                int numarFiole = resultSetFiole.getInt("numar_fiole");
+                                medicamente.add(new Fiole(id, denumire, new FurnizorRepositoryImpl().findFurnizorById(furnizorId), pret, stoc, volum, numarFiole));
+                            }
                         }
                     }
-                } else if(tip.equals("model.Comprimate")) {
-                    sql = "SELECT * FROM Comprimate WHERE id = ?";
-                    try (PreparedStatement statementComprimate = connection.prepareStatement(sql)) {
-                        statementComprimate.setInt(1, id);
-                        ResultSet resultSetComprimate = statementComprimate.executeQuery();
-                        if (resultSetComprimate.next()) {
-                            int numarComprimate = resultSetComprimate.getInt("numar_comprimate");
-                            int miligrame = resultSetComprimate.getInt("miligrame");
-                            medicamente.add(new Comprimate(id, denumire, new FurnizorRepositoryImpl().findFurnizorById(furnizorId), pret, stoc, numarComprimate, miligrame));
+                    case "model.Comprimate" -> {
+                        sql = "SELECT * FROM Comprimate WHERE id = ?";
+                        try (PreparedStatement statementComprimate = connection.prepareStatement(sql)) {
+                            statementComprimate.setInt(1, id);
+                            ResultSet resultSetComprimate = statementComprimate.executeQuery();
+                            if (resultSetComprimate.next()) {
+                                int numarComprimate = resultSetComprimate.getInt("numar_comprimate");
+                                int miligrame = resultSetComprimate.getInt("miligrame");
+                                medicamente.add(new Comprimate(id, denumire, new FurnizorRepositoryImpl().findFurnizorById(furnizorId), pret, stoc, numarComprimate, miligrame));
+                            }
                         }
                     }
-                } else if(tip.equals("model.Sirop")) {
-                    sql = "SELECT * FROM Sirop WHERE id = ?";
-                    try (PreparedStatement statementSirop = connection.prepareStatement(sql)) {
-                        statementSirop.setInt(1, id);
-                        ResultSet resultSetSirop = statementSirop.executeQuery();
-                        if (resultSetSirop.next()) {
-                            int mililitri = resultSetSirop.getInt("mililitri");
-                            medicamente.add(new Sirop(id, denumire, new FurnizorRepositoryImpl().findFurnizorById(furnizorId), pret, stoc, mililitri));
+                    case "model.Sirop" -> {
+                        sql = "SELECT * FROM Sirop WHERE id = ?";
+                        try (PreparedStatement statementSirop = connection.prepareStatement(sql)) {
+                            statementSirop.setInt(1, id);
+                            ResultSet resultSetSirop = statementSirop.executeQuery();
+                            if (resultSetSirop.next()) {
+                                int mililitri = resultSetSirop.getInt("mililitri");
+                                medicamente.add(new Sirop(id, denumire, new FurnizorRepositoryImpl().findFurnizorById(furnizorId), pret, stoc, mililitri));
+                            }
                         }
                     }
-                } else {
+                    default -> {
+                    }
                 }
             }
 
@@ -101,8 +104,7 @@ try (Connection connection = DatabaseService.getInstance().getConnection();
 
             statement.executeUpdate();
 
-            if (medicament instanceof Fiole) {
-                Fiole fiole = (Fiole) medicament;
+            if (medicament instanceof Fiole fiole) {
 
                 sql = "INSERT INTO Fiole VALUES (?, ?, ?)";
 
@@ -113,8 +115,7 @@ try (Connection connection = DatabaseService.getInstance().getConnection();
 
                     statementFiole.executeUpdate();
                 }
-            } else if (medicament instanceof Comprimate) {
-                Comprimate comprimate = (Comprimate) medicament;
+            } else if (medicament instanceof Comprimate comprimate) {
 
                 sql = "INSERT INTO Comprimate VALUES (?, ?, ?)";
 
@@ -125,8 +126,7 @@ try (Connection connection = DatabaseService.getInstance().getConnection();
 
                     statementComprimate.executeUpdate();
                 }
-            } else if (medicament instanceof Sirop) {
-                Sirop sirop = (Sirop) medicament;
+            } else if (medicament instanceof Sirop sirop) {
 
                 sql = "INSERT INTO Sirop VALUES (?, ?)";
 
@@ -161,8 +161,7 @@ try (Connection connection = DatabaseService.getInstance().getConnection();
 
             statement.executeUpdate();
 
-            if (medicament instanceof Fiole) {
-                Fiole fiole = (Fiole) medicament;
+            if (medicament instanceof Fiole fiole) {
 
                 sql = "UPDATE Fiole SET volum = ?, numar_fiole = ? WHERE id = ?";
 
@@ -173,8 +172,7 @@ try (Connection connection = DatabaseService.getInstance().getConnection();
 
                     statementFiole.executeUpdate();
                 }
-            } else if (medicament instanceof Comprimate) {
-                Comprimate comprimate = (Comprimate) medicament;
+            } else if (medicament instanceof Comprimate comprimate) {
 
                 sql = "UPDATE Comprimate SET numar_comprimate = ?, miligrame = ? WHERE id = ?";
 
@@ -185,8 +183,7 @@ try (Connection connection = DatabaseService.getInstance().getConnection();
 
                     statementComprimate.executeUpdate();
                 }
-            } else if (medicament instanceof Sirop) {
-                Sirop sirop = (Sirop) medicament;
+            } else if (medicament instanceof Sirop sirop) {
 
                 sql = "UPDATE Sirop SET mililitri = ? WHERE id = ?";
 
@@ -216,26 +213,29 @@ try (Connection connection = DatabaseService.getInstance().getConnection();
 
             String tip = medicament.getTip();
 
-            if (tip.equals("model.Fiole")) {
-                sql = "DELETE FROM Fiole WHERE id = ?";
-                try (PreparedStatement statementFiole = connection.prepareStatement(sql)) {
-                    statementFiole.setInt(1, medicament.getId());
-                    statementFiole.executeUpdate();
+            switch (tip) {
+                case "model.Fiole" -> {
+                    sql = "DELETE FROM Fiole WHERE id = ?";
+                    try (PreparedStatement statementFiole = connection.prepareStatement(sql)) {
+                        statementFiole.setInt(1, medicament.getId());
+                        statementFiole.executeUpdate();
+                    }
                 }
-            } else if (tip.equals("model.Comprimate")) {
-                sql = "DELETE FROM Comprimate WHERE id = ?";
-                try (PreparedStatement statementComprimate = connection.prepareStatement(sql)) {
-                    statementComprimate.setInt(1, medicament.getId());
-                    statementComprimate.executeUpdate();
+                case "model.Comprimate" -> {
+                    sql = "DELETE FROM Comprimate WHERE id = ?";
+                    try (PreparedStatement statementComprimate = connection.prepareStatement(sql)) {
+                        statementComprimate.setInt(1, medicament.getId());
+                        statementComprimate.executeUpdate();
+                    }
                 }
-            } else if (tip.equals("model.Sirop")) {
-                sql = "DELETE FROM Sirop WHERE id = ?";
-                try (PreparedStatement statementSirop = connection.prepareStatement(sql)) {
-                    statementSirop.setInt(1, medicament.getId());
-                    statementSirop.executeUpdate();
+                case "model.Sirop" -> {
+                    sql = "DELETE FROM Sirop WHERE id = ?";
+                    try (PreparedStatement statementSirop = connection.prepareStatement(sql)) {
+                        statementSirop.setInt(1, medicament.getId());
+                        statementSirop.executeUpdate();
+                    }
                 }
-            } else {
-                throw new IllegalArgumentException("Invalid type");
+                default -> throw new IllegalArgumentException("Invalid type");
             }
 
             statement.executeUpdate();

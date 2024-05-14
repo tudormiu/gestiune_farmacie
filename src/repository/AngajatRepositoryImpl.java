@@ -4,7 +4,6 @@ import model.Angajat;
 import service.DatabaseService;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,9 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class AngajatRepositoryImpl implements AngajatRepository {
-
-
-    private List<Angajat> angajati = new ArrayList<>();
 
     @Override
     public Optional<Angajat> find(String nume, String prenume) {

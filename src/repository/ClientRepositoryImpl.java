@@ -77,7 +77,7 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     @Override
     public void save(Client client) {
-        String sql = "INSERT INTO clienti VALUES (?, ?, ?, ?, ?)"; // Adjust the SQL query as necessary
+        String sql = "INSERT INTO clienti VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = DatabaseService.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -97,7 +97,7 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     @Override
     public void update(Client client) {
-        String sql = "UPDATE clienti SET nume = ?, prenume = ?, telefon = ?, adresa = ? WHERE id = ?"; // Adjust the SQL query as necessary
+        String sql = "UPDATE clienti SET nume = ?, prenume = ?, telefon = ?, adresa = ? WHERE id = ?";
 
         try (Connection connection = DatabaseService.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
